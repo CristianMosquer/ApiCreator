@@ -5,11 +5,12 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node src/server.js",
-    "dev": "nodemon src/server.js"
+    "dev": "nodemon src/server.js",
+    "build": "webpack --mode production" 
   },
-  "author": "",
+  "author": "Cristian Mosquer",
   "license": "ISC",
-  "description": "",
+  "description": "A REST API creation tool.",
   "dependencies": {
     "bcrypt": "^5.1.1",
     "bcryptjs": "^2.4.3",
@@ -17,7 +18,6 @@
     "dotenv": "^16.4.7",
     "express": "^4.21.2",
     "express-validator": "^7.2.0",
-    "exprexx": "^1.0.0",
     "jsonwebtoken": "^9.0.2",
     "mongoose": "^8.8.4",
     "passport": "^0.7.0",
