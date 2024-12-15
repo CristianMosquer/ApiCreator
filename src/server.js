@@ -1,8 +1,16 @@
-const app = require("./app"); // Correctamente importando la aplicación configurada en app.js
+require('dotenv').config();
+const express = require('express');
+const app = express();
+const PORT = process.env.PORT || 3000; // Usa el puerto de Render o 3000 por defecto.
 
-const PORT = process.env.PORT || 3000; // Configurando el puerto para el servidor
+app.use(express.json()); // Middleware para manejar JSON
 
-console.log("Iniciando servidor..."); // Mensaje para depuración
+// Define tus rutas aquí
+app.get('/', (req, res) => {
+  res.send('API Creator está funcionando correctamente');
+});
+
+// Inicia el servidor
 app.listen(PORT, () => {
-  console.log(`Servidor está corriendo en http://localhost:${PORT}`);
+  console.log(`Servidor corriendo en el puerto ${PORT}`);
 });
