@@ -1,16 +1,25 @@
-require('dotenv').config();
 const express = require('express');
+const connectBD = require('./config/database'); // Conectar a la base de datos
+const cors = require('cors'); // Para permitir peticiones desde el frontend
+const vueloRoutes = require('./routes/vueloRoutes'); // Rutas para vuelos
+
 const app = express();
-const PORT = process.env.PORT || 3000; // Usa el puerto de Render o 3000 por defecto.
 
-app.use(express.json()); // Middleware para manejar JSON
+app.use(cors()); // Configurar CORS para solicitudes desde el frontend
+app.use(express.json()); // Middleware para parsear JSON
 
-// Define tus rutas aquí
+// Conectar a la base de datos
+connectBD();
+
+// Ruta principal
 app.get('/', (req, res) => {
-  res.send('API Creator está funcionando correctamente');
+    res.send('<h1>BIENVENIDO A API STORE!</h1>');
 });
 
-// Inicia el servidor
+// Rutas para la gestión de vuelos
+app.use('/api/vuelo', vueloRoutes);
+
+const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
-  console.log(`Servidor corriendo en el puerto ${PORT}`);
+    console.log(`Servidor corriendo en el puerto ${PORT}`);
 });

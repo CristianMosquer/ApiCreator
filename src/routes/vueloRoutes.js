@@ -1,15 +1,33 @@
-const express = require("express");
-const {
-  createVuelo,
-  getAllVuelos,
-} = require("../controllers/vueloController"); // Importar controladores
+// src/controllers/vueloController.js
+const Vuelo = require("../models/Vuelo"); // Asegúrate de tener el modelo de Vuelo
 
-const router = express.Router();
+// Función para crear un vuelo
+exports.createVuelo = async (req, res) => {
+  try {
+    const { nombre, destino, fecha, asientosDisponibles } = req.body;
 
-// Ruta para crear un vuelo
-router.post("/", createVuelo);
+    // Crear una nueva instancia del vuelo
+    const nuevoVuelo = new Vuelo({
+      nombre,
+      destino,
+      fecha,
+      asientosDisponibles,
+    });
 
-// Ruta para obtener todos los vuelos
-router.get("/", getAllVuelos);
+    // Guardar el vuelo en la base de datos
+    await nuevoVuelo.save();
+    res.status(201).json({ message: "Vuelo creado exitosamente", vuelo: nuevoVuelo });
+  } catch (error) {
+    res.status(500).json({ message: "Error al crear el vuelo", error });
+  }
+};
 
-module.exports = router;
+// Función para obtener todos los vuelos
+exports.getAllVuelos = async (req, res) => {
+  try {
+    const vuelos = await Vuelo.find(); // Obtener todos los vuelos de la base de datos
+    res.status(200).json(vuelos);
+  } catch (error) {
+    res.status(500).json({ message: "Error al obtener los vuelos", error });
+  }
+};
